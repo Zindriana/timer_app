@@ -8,6 +8,7 @@ function App() {
   
   return (
     <>
+      < Logo/ >
       <Routes>
          <Route path="/timer" element={<Timer />} />
          <Route path="/logo" element={<Logo />} />
