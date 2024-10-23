@@ -8,7 +8,6 @@ function App() {
   return (
     
     <>
-    < Logo />
       <Routes>
         <Route path="/" element={<Logo />} />
         <Route path="/logo" element={<Logo />} />
