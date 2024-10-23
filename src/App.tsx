@@ -8,9 +8,7 @@ function App() {
   return (
     
     <>
-    <div>
-         <h1>Hello World!</h1>
-       </div>
+    < Logo />
       <Routes>
         <Route path="/" element={<Logo />} />
         <Route path="/logo" element={<Logo />} />
