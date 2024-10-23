@@ -8,7 +8,9 @@ function App() {
   return (
     
     <>
-    console.log("App renderas")
+    <div>
+         <h1>Hello World!</h1>
+       </div>
       <Routes>
         <Route path="/" element={<Logo />} />
         <Route path="/logo" element={<Logo />} />
