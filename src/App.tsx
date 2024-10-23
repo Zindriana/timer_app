@@ -8,10 +8,11 @@ function App() {
   
   return (
     <>
-      < Logo/ >
+    <h1>Welcome to the Timer</h1>
       <Routes>
-         <Route path="/timer" element={<Timer />} />
-         <Route path="/logo" element={<Logo />} />
+        <Route path="/" element={<Logo />} />
+        <Route path="/logo" element={<Logo />} />
+        <Route path="/timer" element={<Timer />} />
        </Routes>
     </>
   )
