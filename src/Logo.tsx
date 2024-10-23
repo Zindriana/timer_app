@@ -9,11 +9,14 @@ function Logo(){
     }
 
     return(
-    <h1>
-        <button onClick={handleClick}className='logo_btn'>
-            <img src={timer_logo} className="timer_logo" alt="timer_logo" />
-        </button>
-    </h1>
+    <>
+    <h1>Welcome to the Timer</h1>
+        <h1>
+            <button onClick={handleClick}className='logo_btn'>
+                <img src={timer_logo} className="timer_logo" alt="timer_logo" />
+            </button>
+        </h1>
+    </>
     )
 }
 

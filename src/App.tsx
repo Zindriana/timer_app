@@ -8,7 +8,6 @@ function App() {
   
   return (
     <>
-    <h1>Welcome to the Timer</h1>
       <Routes>
         <Route path="/" element={<Logo />} />
         <Route path="/logo" element={<Logo />} />
