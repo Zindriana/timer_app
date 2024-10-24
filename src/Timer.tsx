@@ -20,7 +20,7 @@ function Timer(){
 
         setTime(prevTime => {
             const newTime = prevTime+1;
-            if (newTime % 10 === 0){
+            if (newTime % 5 === 0){
                 const audio = new Audio(mm_vaniljsas);
                 audio.play();
             }
