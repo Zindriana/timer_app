@@ -30,7 +30,7 @@ function Timer(){
     }
 
     function handleBeepChange(event: React.ChangeEvent<HTMLInputElement>){
-        if(Number(event)>0){
+        if(Number(event.target.value)>0){
             setBeepNumber(Number(event.target.value));
         }
         
