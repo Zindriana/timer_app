@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import mm_vaniljsas from './audio/mm_vanlijsas.ogg';
 function Timer(){
 
     const [time, setTime] = useState(0);
@@ -16,7 +17,15 @@ function Timer(){
     }
     
     function increaseTimeCounterByOne(){
-        setTime(prevTime => prevTime+1);
+
+        setTime(prevTime => {
+            const newTime = prevTime+1;
+            if (newTime % 10 === 0){
+                const audio = new Audio(mm_vaniljsas);
+                audio.play();
+            }
+            return newTime;
+        });
     }
 
     return(
