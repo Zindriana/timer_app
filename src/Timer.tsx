@@ -57,6 +57,7 @@ function Timer(){
         <button className="timer_btn" onClick={startTimer}>
             Start timer
         </button>
+        <br/>
         <span>Intervallet för beep-ljud</span>
         <input type='number' className="beepNumber" onChange={handleBeepChange}></input>
         <span>Hur långt setet ska vara</span>
