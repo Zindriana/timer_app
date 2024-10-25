@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import mm_vaniljsas from './audio/mm_vanlijsas.ogg';
+import you_can_rest_now from './audio/you_can_rest_now.mp3';
 function Timer(){
 
     const [time, setTime] = useState(0);
@@ -21,6 +22,11 @@ function Timer(){
 
         setTime(prevTime => {
             const newTime = prevTime+1;
+            if (newTime % 12 === 0){
+                const audio = new Audio(you_can_rest_now);
+                audio.play();
+                return newTime;
+            }
             if (newTime % beepNumber === 0){
                 const audio = new Audio(mm_vaniljsas);
                 audio.play();
