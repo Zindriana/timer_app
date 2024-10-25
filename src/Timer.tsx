@@ -71,7 +71,7 @@ function Timer(){
         </section>
         <section>
             <button className="paus_btn" onClick={pauseTimer}>
-                Pausa timer
+                Pausa timer 
             </button>
         </section>
         <section>
