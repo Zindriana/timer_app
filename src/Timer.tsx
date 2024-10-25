@@ -1,107 +1,116 @@
-// import { useRef, useState } from "react";
-// import mm_vaniljsas from './audio/mm_vanlijsas.ogg';
-// //import you_can_rest_now from './audio/you_can_rest_now.mp3';
-// function Timer(){
+import { useRef, useState } from "react";
+import you_can_rest_now from './audio/you_can_rest_now.mp3';
+import new_set from './audio/new_set.mp3';
+import rest_between_set from './audio/rest_between_set.mp3';
 
-//     // const [totalTime, setTotalTime] = useState(0);
-//     // const [restTime, setRestTime] = useState(0);
-//     const intervalTimerRef = useRef(0);
-//     //const intervalRestTimerRef = useRef(0);
-//     const [beepNumber, setBeepNumber] = useState(0);
-//     // const [longRestNumber, setLongRestNumber] = useState(0);
-//     // const [shortRestTime, setShortRestTime] = useState(0);
+function Timer(){
 
-//     function startTimer(){
-//         if(intervalTimerRef.current === 0){
-//             intervalTimerRef.current = setInterval(increaseTimeCounterByOne, 1000);
-//         }
-//     }
+    const amountOfSetsFinished : number = 0; // Amount of sets that the user has done
+    const intervalTotalTimerRef = useRef(0); // checking if the timer is active or not
+    const intervalRoundTimeRef = useRef(true);
+    const [totalTime, setTotalTime] = useState(0); // time that the user sees
+    const [roundTime, setRoundTime] = useState(0); // timer for the active set
+    const [howLongRoundTime, setHowLongRoundTime] = useState(0); // how long time in seconds each set is 
+    const [shortRestTime, setShortRestTime] = useState(0); // how long time in seconds each rest is
+    const [amountOfSetsToFinish, setAmountOfSetsToFinish] = useState(0); // how many sets the user is going to do
 
-//     // function startRestTimer(){
-//     //     if(intervalRestTimerRef.current === 0){
-//     //         intervalRestTimerRef.current = setInterval(increaseRestCounterByOne, 1000);
-//     //     }
-//     // }
+    function startTimer(){
+        if(intervalTotalTimerRef.current === 0){
+            intervalTotalTimerRef.current = setInterval(increaseTimeCounterByOne, 1000);
+            setInterval(increaseSetTimerByOne, 1000);
+        }
+    }
 
-//     function pauseTimer(){
-//         clearInterval(intervalTimerRef.current);
-//         intervalTimerRef.current = 0;
-//     }
+    function pauseTimer(){
+            clearInterval(intervalTotalTimerRef.current);
+            intervalTotalTimerRef.current = 0;
+    }
 
-//     function stopTimer(){
-//         clearInterval(intervalTimerRef.current);
-//         intervalTimerRef.current = 0;
-//         setTotalTime(0);
-//     }
+    function stopTimer(){
+        clearInterval(intervalTotalTimerRef.current);
+        intervalTotalTimerRef.current = 0;
+        setTotalTime(0);
+    }
     
-//     function increaseTimeCounterByOne(){
+    function increaseTimeCounterByOne(){
+        if(amountOfSetsFinished !== amountOfSetsToFinish){
+            setTotalTime(prevTime => {
+                const newTime = prevTime+1;
+                return newTime;
+            });
+        }
+    }
 
-//         setTotalTime(prevTime => {
-//             const newTime = prevTime+1;
-//             // if (newTime % restNumber === 0){
-//             //     const audio = new Audio(you_can_rest_now);
-//             //     audio.play();
-//             //     clearInterval(intervalRef.current);
-//             //     intervalRef.current = 0;
-//             //     return newTime;
-//             // }
-//             if (newTime % beepNumber === 0){
-//                 const audio = new Audio(mm_vaniljsas);
-//                 audio.play();
-//             }
-//             return newTime;
-//         });
-//     }
-
-//     function increaseRestCounterByOne(){
+    function increaseSetTimerByOne(){
+        if(amountOfSetsFinished !== amountOfSetsToFinish){
         
-//     }
+            if(intervalRoundTimeRef.current){
+                setRoundTime(prevTime => {
+                    let newTime = prevTime+1;
+                    if (newTime % howLongRoundTime){
+                        const audio = new Audio(rest_between_set);
+                        audio.play();
+                        newTime = 0;
+                        intervalRoundTimeRef.current = false;
+                    }
+                    return newTime;
+                })
+            } else {
+                setRoundTime(prevTime => {
+                    let newTime = prevTime+1;
+                    if(newTime % shortRestTime === 0){
+                        const audio = new Audio(new_set);
+                        audio.play();
+                        newTime = 0;
+                        intervalRoundTimeRef.current = true;
+                    }
+                    return newTime;
+                })
+            }
+        } else {
+            const audio = new Audio(you_can_rest_now);
+            audio.play();
+            intervalRoundTimeRef.current = true;
+            clearInterval(intervalTotalTimerRef.current);
+            intervalTotalTimerRef.current = 0;
+        }
+    }
 
-//     function handleBeepChange(event: React.ChangeEvent<HTMLInputElement>){
-//         if(Number(event.target.value)>0){
-//             setBeepNumber(Number(event.target.value));
-//         } 
-//     }
 
-//     function handleLongRestChange(event: React.ChangeEvent<HTMLInputElement>){
-//         if(Number(event.target.value)>0){
-//             setLongRestNumber(Number(event.target.value));
-//         } 
-//     }
+    function handleChange(event: React.ChangeEvent<HTMLInputElement>, setterFunction: (value: number) => void){
+        if(Number(event.target.value)>0){
+            setterFunction(Number(event.target.value));
+        } 
+    }
 
-//     function handleShortRestChange(event: React.ChangeEvent<HTMLInputElement>){
-//         if(Number(event.target.value)>0){
-//             setLongRestNumber(Number(event.target.value));
-//         } 
-//     }
+    return(
+    <>
+        <p>Total Tid: {totalTime} sekunder</p>
+        <p>Set- och vilotid {roundTime}</p>
+        <section>
+            <br/>
+            <span>Hur långt varje set ska vara</span>
+            <input type='number' className="beepNumber" onChange={(event) => handleChange(event, setHowLongRoundTime)}></input>
+            <span>Hur många set rundan ska vara</span>
+            <input type='number' className="longRestNumber" onChange={(event) => handleChange(event, setAmountOfSetsToFinish)}></input>
+            <span>Hur lång setvilan ska vara</span>
+            <input type='number' className="shortRestNumber" onChange={(event) => handleChange(event, setShortRestTime)}></input>
+            <button className="timer_btn" onClick={startTimer}>
+                Start timer
+            </button>
+        </section>
+        <section>
+            <button className="paus_btn" onClick={pauseTimer}>
+                Pausa timer 
+            </button>
+        </section>
+        <section>
+            <button className="stop_btn" onClick={stopTimer}>
+                Stoppa och nollställa timer
+            </button>
+        </section>
+    </>
+    )
+}
 
-//     return(
-//     <>
-//         <p>Tid: {time} sekunder</p>
-//         <section>
-//             <br/>
-//             <span>Intervallet för beep-ljud</span>
-//             <input type='number' className="beepNumber" onChange={handleBeepChange}></input>
-//             <span>Hur många set rundan ska vara</span>
-//             <input type='number' className="longRestNumber" onChange={handleLongRestChange}></input>
-//             <span>Hur lång setvilan ska vara</span>
-//             <input type='number' className="shortRestNumber" onChange={handleShortRestChange}></input>
-//             <button className="timer_btn" onClick={startTimer}>
-//                 Start timer
-//             </button>
-//         </section>
-//         <section>
-//             <button className="paus_btn" onClick={pauseTimer}>
-//                 Pausa timer 
-//             </button>
-//         </section>
-//         <section>
-//             <button className="stop_btn" onClick={stopTimer}>
-//                 Stoppa och nollställa timer
-//             </button>
-//         </section>
-//     </>
-//     )
-// }
-
-// export default Timer;
+export default Timer;
