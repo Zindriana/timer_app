@@ -6,6 +6,7 @@ function Timer(){
     const [time, setTime] = useState(0);
     const intervalRef = useRef(0);
     const [beepNumber, setBeepNumber] = useState(0);
+    const [restNumber, setRestNumber] = useState(0);
 
     function startTimer(){
         if(intervalRef.current === 0){
@@ -22,9 +23,11 @@ function Timer(){
 
         setTime(prevTime => {
             const newTime = prevTime+1;
-            if (newTime % 12 === 0){
+            if (newTime % restNumber === 0){
                 const audio = new Audio(you_can_rest_now);
                 audio.play();
+                clearInterval(intervalRef.current);
+                intervalRef.current = 0;
                 return newTime;
             }
             if (newTime % beepNumber === 0){
@@ -38,8 +41,13 @@ function Timer(){
     function handleBeepChange(event: React.ChangeEvent<HTMLInputElement>){
         if(Number(event.target.value)>0){
             setBeepNumber(Number(event.target.value));
-        }
-        
+        } 
+    }
+
+    function handleRestChange(event: React.ChangeEvent<HTMLInputElement>){
+        if(Number(event.target.value)>0){
+            setRestNumber(Number(event.target.value));
+        } 
     }
 
     return(
@@ -52,6 +60,7 @@ function Timer(){
             Stop timer
         </button>
         <input type='number' className="beepNumber" onChange={handleBeepChange}></input>
+        <input type='number' className="restNumber" onChange={handleRestChange}></input>
     </>
     )
 }
