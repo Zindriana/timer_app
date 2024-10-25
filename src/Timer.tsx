@@ -14,9 +14,15 @@ function Timer(){
         }
     }
 
+    function pauseTimer(){
+        clearInterval(intervalRef.current);
+        intervalRef.current = 0;
+    }
+
     function stopTimer(){
         clearInterval(intervalRef.current);
         intervalRef.current = 0;
+        setTime(0);
     }
     
     function increaseTimeCounterByOne(){
@@ -54,20 +60,24 @@ function Timer(){
     <>
         <p>Tid: {time} sekunder</p>
         <section>
-        <button className="timer_btn" onClick={startTimer}>
-            Start timer
-        </button>
-        <br/>
-        <span>Intervallet för beep-ljud</span>
-        <input type='number' className="beepNumber" onChange={handleBeepChange}></input>
-        <span>Hur långt setet ska vara</span>
-        <input type='number' className="restNumber" onChange={handleRestChange}></input>
+            <button className="timer_btn" onClick={startTimer}>
+                Start timer
+            </button>
+            <br/>
+            <span>Intervallet för beep-ljud</span>
+            <input type='number' className="beepNumber" onChange={handleBeepChange}></input>
+            <span>Hur långt setet ska vara</span>
+            <input type='number' className="restNumber" onChange={handleRestChange}></input>
         </section>
         <section>
-        <button className="stop_btn" onClick={stopTimer}>
-            Stop timer
-        </button>
-        
+            <button className="paus_btn" onClick={pauseTimer}>
+                Pausa timer
+            </button>
+        </section>
+        <section>
+            <button className="stop_btn" onClick={stopTimer}>
+                Stop timer
+            </button>
         </section>
     </>
     )
