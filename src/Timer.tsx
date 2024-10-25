@@ -53,14 +53,21 @@ function Timer(){
     return(
     <>
         <p>Tid: {time} sekunder</p>
+        <section>
         <button className="timer_btn" onClick={startTimer}>
             Start timer
         </button>
+        <span>Intervallet för beep-ljud</span>
+        <input type='number' className="beepNumber" onChange={handleBeepChange}></input>
+        <span>Hur långt setet ska vara</span>
+        <input type='number' className="restNumber" onChange={handleRestChange}></input>
+        </section>
+        <section>
         <button className="stop_btn" onClick={stopTimer}>
             Stop timer
         </button>
-        <input type='number' className="beepNumber" onChange={handleBeepChange}></input>
-        <input type='number' className="restNumber" onChange={handleRestChange}></input>
+        
+        </section>
     </>
     )
 }
