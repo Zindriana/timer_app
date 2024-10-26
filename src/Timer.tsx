@@ -29,11 +29,15 @@ function Timer(){
     function pauseTimer(){
             clearInterval(intervalTotalTimerRef.current);
             intervalTotalTimerRef.current = 0;
+            clearInterval(intervalRoundTimeActiveRef.current);
     }
 
     function stopTimer(){
         clearInterval(intervalTotalTimerRef.current);
         intervalTotalTimerRef.current = 0;
+        clearInterval(intervalRoundTimeActiveRef.current);
+        intervalRoundTimeActiveRef.current = 1;
+        amountOfSetsFinished = 0;
         setTotalTime(0);
     }
     
