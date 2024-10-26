@@ -80,6 +80,7 @@ function Timer(){
                 intervalTotalTimerRef.current = 0;
                 clearInterval(intervalRoundTimeActiveRef.current);
                 intervalRoundTimeActiveRef.current = 1;
+                return null;
             }
     }
 
