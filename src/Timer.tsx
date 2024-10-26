@@ -8,7 +8,7 @@ function Timer(){
     let amountOfSetsFinished : number = 0; // Amount of sets that the user has done
     const intervalTotalTimerRef = useRef(0); // checking if the timer is active or not
     const intervalRoundTimeRef = useRef(1);
-    const intervalRoundTimeRef2 = useRef(1);
+    const intervalRoundTimeRef2 = useRef(0);
     const [totalTime, setTotalTime] = useState(0); // time that the user sees
     const [roundTime, setRoundTime] = useState(0); // timer for the active set
     const [howLongRoundTime, setHowLongRoundTime] = useState(0); // how long time in seconds each set is 
