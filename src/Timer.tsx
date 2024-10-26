@@ -7,7 +7,7 @@ function Timer(){
 
     let amountOfSetsFinished : number = 0; // Amount of sets that the user has done
     const intervalTotalTimerRef = useRef(0); // checking if the timer is active or not
-    const intervalRoundTimeRef = useRef(true);
+    const intervalRoundTimeRef = useRef(1);
     const [totalTime, setTotalTime] = useState(0); // time that the user sees
     const [roundTime, setRoundTime] = useState(0); // timer for the active set
     const [howLongRoundTime, setHowLongRoundTime] = useState(0); // how long time in seconds each set is 
@@ -44,14 +44,14 @@ function Timer(){
     function increaseSetTimerByOne(){
         if(amountOfSetsFinished !== amountOfSetsToFinish){
         
-            if(intervalRoundTimeRef.current === true){
+            if(intervalRoundTimeRef.current === 1){
                 setRoundTime(prevTime => {
                     let newTime = prevTime+1;
                     if (newTime % howLongRoundTime){
                         const audio = new Audio(rest_between_set);
                         audio.play();
                         newTime = 0;
-                        intervalRoundTimeRef.current = false;
+                        intervalRoundTimeRef.current = 0;
                         amountOfSetsFinished++
                     }
                     return newTime;
@@ -63,7 +63,7 @@ function Timer(){
                         const audio = new Audio(new_set);
                         audio.play();
                         newTime = 0;
-                        intervalRoundTimeRef.current = true;
+                        intervalRoundTimeRef.current = 1;
                     }
                     return newTime;
                 })
@@ -71,7 +71,7 @@ function Timer(){
         } else {
             const audio = new Audio(you_can_rest_now);
             audio.play();
-            intervalRoundTimeRef.current = true;
+            intervalRoundTimeRef.current = 1;
             clearInterval(intervalTotalTimerRef.current);
             intervalTotalTimerRef.current = 0;
         }
