@@ -8,6 +8,7 @@ function Timer(){
     let amountOfSetsFinished : number = 0; // Amount of sets that the user has done
     const intervalTotalTimerRef = useRef(0); // checking if the timer is active or not
     const intervalRoundTimeRef = useRef(1);
+    const intervalRoundTimeRef2 = useRef(1);
     const [totalTime, setTotalTime] = useState(0); // time that the user sees
     const [roundTime, setRoundTime] = useState(0); // timer for the active set
     const [howLongRoundTime, setHowLongRoundTime] = useState(0); // how long time in seconds each set is 
@@ -42,38 +43,41 @@ function Timer(){
     }
 
     function increaseSetTimerByOne(){
-        if(amountOfSetsFinished !== amountOfSetsToFinish){
-        
-            if(intervalRoundTimeRef.current === 1){
-                setRoundTime(prevTime => {
-                    let newTime = prevTime+1;
-                    if (newTime % howLongRoundTime){
-                        const audio = new Audio(rest_between_set);
-                        audio.play();
-                        newTime = 0;
-                        intervalRoundTimeRef.current = 0;
-                        amountOfSetsFinished++
-                    }
-                    return newTime;
-                })
+        if(intervalRoundTimeRef2.current !== 0){
+            if(amountOfSetsFinished !== amountOfSetsToFinish){
+            
+                if(intervalRoundTimeRef.current === 1){
+                    setRoundTime(prevTime => {
+                        let newTime = prevTime+1;
+                        if (newTime % howLongRoundTime){
+                            const audio = new Audio(rest_between_set);
+                            audio.play();
+                            newTime = 0;
+                            intervalRoundTimeRef.current = 0;
+                            amountOfSetsFinished++
+                        }
+                        return newTime;
+                    })
+                } else {
+                    setRoundTime(prevTime => {
+                        let newTime = prevTime+1;
+                        if(newTime % shortRestTime === 0){
+                            const audio = new Audio(new_set);
+                            audio.play();
+                            newTime = 0;
+                            intervalRoundTimeRef.current = 1;
+                        }
+                        return newTime;
+                    })
+                }
             } else {
-                setRoundTime(prevTime => {
-                    let newTime = prevTime+1;
-                    if(newTime % shortRestTime === 0){
-                        const audio = new Audio(new_set);
-                        audio.play();
-                        newTime = 0;
-                        intervalRoundTimeRef.current = 1;
-                    }
-                    return newTime;
-                })
+                const audio = new Audio(you_can_rest_now);
+                audio.play();
+                intervalRoundTimeRef.current = 1;
+                clearInterval(intervalTotalTimerRef.current);
+                intervalTotalTimerRef.current = 0;
+                intervalRoundTimeRef2.current = 1;
             }
-        } else {
-            const audio = new Audio(you_can_rest_now);
-            audio.play();
-            intervalRoundTimeRef.current = 1;
-            clearInterval(intervalTotalTimerRef.current);
-            intervalTotalTimerRef.current = 0;
         }
     }
 
