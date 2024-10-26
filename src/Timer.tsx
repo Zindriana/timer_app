@@ -5,7 +5,7 @@ import rest_between_set from './audio/rest_between_set.mp3';
 
 function Timer(){
 
-    const amountOfSetsFinished : number = 0; // Amount of sets that the user has done
+    let amountOfSetsFinished : number = 0; // Amount of sets that the user has done
     const intervalTotalTimerRef = useRef(0); // checking if the timer is active or not
     const intervalRoundTimeRef = useRef(true);
     const [totalTime, setTotalTime] = useState(0); // time that the user sees
@@ -44,7 +44,7 @@ function Timer(){
     function increaseSetTimerByOne(){
         if(amountOfSetsFinished !== amountOfSetsToFinish){
         
-            if(intervalRoundTimeRef.current){
+            if(intervalRoundTimeRef.current === true){
                 setRoundTime(prevTime => {
                     let newTime = prevTime+1;
                     if (newTime % howLongRoundTime){
@@ -52,6 +52,7 @@ function Timer(){
                         audio.play();
                         newTime = 0;
                         intervalRoundTimeRef.current = false;
+                        amountOfSetsFinished++
                     }
                     return newTime;
                 })
