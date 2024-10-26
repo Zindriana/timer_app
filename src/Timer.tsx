@@ -73,7 +73,7 @@ function Timer(){
                         return newTime;
                     })
                 }
-            } else if (!roundIsFinished.current){
+            } else if (roundIsFinished.current === false){
                 const audioFinishRound = new Audio(you_can_rest_now);
                 audioFinishRound.play();
                 clearInterval(intervalTotalTimerRef.current);
