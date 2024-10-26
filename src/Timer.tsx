@@ -3,6 +3,10 @@ import you_can_rest_now from './audio/you_can_rest_now.mp3';
 import new_set from './audio/new_set.mp3';
 import rest_between_set from './audio/rest_between_set.mp3';
 
+//TODO fix bugs in function increaseSetTimerByOne()
+// both sounds are going on at the same time
+// Revenants voiceline is in a unending loop
+// The round timer is not in sync with the total timer
 function Timer(){
 
     let amountOfSetsFinished : number = 0; // Amount of sets that the user has done
