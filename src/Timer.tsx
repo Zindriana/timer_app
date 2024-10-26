@@ -12,6 +12,7 @@ function Timer(){
     let amountOfSetsFinished : number = 0; // Amount of sets that the user has done
     const intervalTotalTimerRef = useRef(0); // checking if the timer is active or not
     const intervalRoundTimeActiveRef = useRef(1);
+    const roundIsFinished = useRef(false);
     const [totalTime, setTotalTime] = useState(0); // time that the user sees
     const [roundTime, setRoundTime] = useState(0); // timer for the active set
     const [howLongRoundTime, setHowLongRoundTime] = useState(0); // how long time in seconds each set is 
@@ -72,14 +73,14 @@ function Timer(){
                         return newTime;
                     })
                 }
-            } else {
-                const audio = new Audio(you_can_rest_now);
-                audio.play();
+            } else if (!roundIsFinished.current){
+                const audioFinishRound = new Audio(you_can_rest_now);
+                audioFinishRound.play();
                 clearInterval(intervalTotalTimerRef.current);
                 intervalTotalTimerRef.current = 0;
                 clearInterval(intervalRoundTimeActiveRef.current);
                 intervalRoundTimeActiveRef.current = 1;
-                
+                roundIsFinished.current = true;
             }
     }
 
