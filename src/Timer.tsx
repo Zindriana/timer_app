@@ -21,8 +21,7 @@ function Timer(){
     function startTimer(){
         if(intervalTotalTimerRef.current === 0){
             intervalTotalTimerRef.current = setInterval(increaseTimeCounterByOne, 1000);
-            intervalRoundTimeActiveRef.current = setInterval(increaseSetTimerByOne, 1000);
-            
+            intervalRoundTimeActiveRef.current = setInterval(increaseSetTimerByOne, 1000); 
         }
     }
 
@@ -52,9 +51,9 @@ function Timer(){
                 if(intervalRoundTimeActiveRef.current === 1){
                     setRoundTime(prevTime => {
                         let newTime = prevTime+1;
-                        if (newTime % howLongRoundTime){
-                            const audio = new Audio(rest_between_set);
-                            audio.play();
+                        if (newTime % howLongRoundTime === 0){
+                            const audioRest = new Audio(rest_between_set);
+                            audioRest.play();
                             newTime = 0;
                             intervalRoundTimeActiveRef.current = 0;
                             amountOfSetsFinished++
@@ -65,8 +64,8 @@ function Timer(){
                     setRoundTime(prevTime => {
                         let newTime = prevTime+1;
                         if(newTime % shortRestTime === 0){
-                            const audio = new Audio(new_set);
-                            audio.play();
+                            const audioNewSet = new Audio(new_set);
+                            audioNewSet.play();
                             newTime = 0;
                             intervalRoundTimeActiveRef.current = 1;
                         }
@@ -80,7 +79,7 @@ function Timer(){
                 intervalTotalTimerRef.current = 0;
                 clearInterval(intervalRoundTimeActiveRef.current);
                 intervalRoundTimeActiveRef.current = 1;
-                return null;
+                
             }
     }
 
